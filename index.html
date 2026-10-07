@@ -1,0 +1,396 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#120c2d">
+  <title>UNO SPACE STATION</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="pixel-space" aria-hidden="true"></div>
+
+  <header class="top-hud">
+    <button class="logo-btn" data-go="world">
+      <span class="uno-badge">UNO</span>
+      <span>
+        <b>SPACE STATION</b>
+        <small>1인분 우주 탐험 게임</small>
+      </span>
+    </button>
+    <div class="global-stats">
+      <div><span>LV.</span><b id="globalLevel">1</b></div>
+      <div class="xp-mini"><span>EXP</span><div class="bar"><i id="globalXpFill"></i></div></div>
+      <div><span>POINT</span><b><i id="globalPoint">350</i>P</b></div>
+      <button class="mini-avatar" data-go="avatar">👩‍🚀</button>
+    </div>
+  </header>
+
+  <main class="app">
+    <!-- WORLD -->
+    <section class="screen active" id="screen-world">
+      <div class="world-title">
+        <div>
+          <span class="pixel-kicker">UNO UNIVERSE / MAIN HUB</span>
+          <h1>UNO SPACE<br><em>STATION</em></h1>
+          <p>게임하고 · 탐험하고 · 성장하고 · 실제 UNO 혜택까지.</p>
+        </div>
+        <div class="guide-intro">
+          <img src="assets/uno_guide.png" alt="UNO 우주인 가이드">
+          <div class="speech-bubble">
+            <b>UNO CREW</b>
+            <p>오늘은 어느 행성부터 가볼래?<br>플레이할수록 더 먼 우주가 열려!</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="world-grid">
+        <aside class="mission-panel pixel-panel">
+          <span class="panel-title">TODAY MISSION</span>
+          <div class="mission-line">
+            <span>01</span>
+            <p>UNO팡 1회 플레이</p>
+            <b id="missionPang">0/1</b>
+          </div>
+          <div class="mission-line">
+            <span>02</span>
+            <p>UNO Chef 피자 완성</p>
+            <b id="missionChef">0/1</b>
+          </div>
+          <div class="mission-line">
+            <span>03</span>
+            <p>Campus League 참여</p>
+            <b id="missionCampus">0/1</b>
+          </div>
+          <div class="mission-reward">
+            <small>ALL CLEAR</small>
+            <strong>+500P</strong>
+          </div>
+        </aside>
+
+        <section class="world-map pixel-panel">
+          <div class="orbit-path path-a"></div>
+          <div class="orbit-path path-b"></div>
+
+          <button class="planet pang" data-go="pang">
+            <span class="planet-icon">🪐</span>
+            <b>UNO팡</b>
+            <small>MATCH-3 PLANET</small>
+          </button>
+
+          <button class="planet chef" data-go="chef">
+            <span class="planet-icon">🍕</span>
+            <b>UNO Chef</b>
+            <small>PIZZA LAB</small>
+          </button>
+
+          <button class="planet avatar" data-go="avatar">
+            <span class="planet-icon">👩‍🚀</span>
+            <b>꾸미기</b>
+            <small>AVATAR LAB</small>
+          </button>
+
+          <button class="planet reward" data-go="rewards">
+            <span class="planet-icon">🎁</span>
+            <b>보상</b>
+            <small>REWARD BAY</small>
+          </button>
+
+          <button class="planet campus" data-go="campus">
+            <span class="planet-icon">🏫</span>
+            <b>Campus League</b>
+            <small>SEASON EVENT</small>
+          </button>
+
+          <button class="planet shop" data-go="shop">
+            <span class="planet-icon">🛸</span>
+            <b>UNO Space Shop</b>
+            <small>REAL MEAL GATE</small>
+          </button>
+
+          <div class="ship">🚀</div>
+        </section>
+      </div>
+    </section>
+
+    <!-- UNO PANG -->
+    <section class="screen" id="screen-pang">
+      <div class="screen-head">
+        <button class="back-btn" data-go="world">← 월드맵</button>
+        <div>
+          <span class="pixel-kicker">MATCH-3 PLANET</span>
+          <h2>UNO팡</h2>
+          <p>7×7 퍼즐을 맞추고 Meal Gauge를 채워 UNO FEVER를 발동하세요.</p>
+        </div>
+      </div>
+
+      <header class="pang-hud pixel-panel">
+        <div><span>SCORE</span><strong id="pangScore">000000</strong></div>
+        <div class="meal-gauge">
+          <label><span>UNO MEAL GAUGE</span><b id="gaugeText">0%</b></label>
+          <div class="gauge-track"><i id="gaugeFill"></i></div>
+        </div>
+        <div class="right"><span>TIME</span><strong><i id="pangTime">60</i>s</strong></div>
+      </header>
+
+      <div class="guide-row">
+        <img src="assets/uno_guide.png" alt="" class="guide-mini">
+        <div class="speech-bubble wide">
+          <b>UNO CREW</b>
+          <p id="pangGuide">붙어 있는 타일을 바꿔서 3개 이상 맞춰봐!</p>
+        </div>
+        <div class="combo-chip pixel-panel">COMBO <b id="pangCombo">x1</b></div>
+      </div>
+
+      <div class="pang-layout">
+        <div class="board-wrap">
+          <div class="fever-banner hidden" id="feverBanner">★ UNO FEVER ★</div>
+          <div class="board" id="pangBoard"></div>
+        </div>
+        <aside class="pang-side">
+          <div class="pixel-panel mini-box">
+            <span>MISSION</span>
+            <p>3 MATCH → GAUGE UP</p>
+            <div class="item-preview">
+              <img src="assets/pizza.png"><img src="assets/package.png"><img src="assets/cheese.png">
+            </div>
+          </div>
+          <div class="pixel-panel mini-box">
+            <span>FEVER</span>
+            <p>GAUGE 100%</p>
+            <b>SCORE ×2</b>
+          </div>
+          <button id="pangStart" class="pixel-btn primary">게임 시작</button>
+          <button id="pangShuffle" class="pixel-btn cyan">셔플 -300점</button>
+        </aside>
+      </div>
+    </section>
+
+    <!-- CHEF -->
+    <section class="screen" id="screen-chef">
+      <div class="screen-head">
+        <button class="back-btn" data-go="world">← 월드맵</button>
+        <div>
+          <span class="pixel-kicker">PIZZA LAB</span>
+          <h2>UNO Chef</h2>
+          <p>토핑을 선택하고 직접 피자를 완성해 우주인 아이템을 수집하세요.</p>
+        </div>
+      </div>
+
+      <div class="chef-grid">
+        <section class="pizza-lab pixel-panel">
+          <div class="lab-guide">
+            <img src="assets/uno_guide.png" alt="UNO 우주인 가이드">
+            <div class="speech-bubble"><b>UNO CREW</b><p>오늘은 어떤 피자를 만들까?</p></div>
+          </div>
+
+          <div class="pizza-stage">
+            <div class="pizza-base" id="pizzaBase">
+              <div class="pizza-cheese"></div>
+              <div id="toppingLayer"></div>
+            </div>
+            <h3 id="pizzaName">오리지널 치즈 피자</h3>
+          </div>
+
+          <div class="ingredients">
+            <button class="ingredient" data-item="pepperoni" data-emoji="🔴">🔴<span>페퍼로니</span></button>
+            <button class="ingredient" data-item="olive" data-emoji="⚫">⚫<span>올리브</span></button>
+            <button class="ingredient" data-item="corn" data-emoji="🟡">🟡<span>옥수수</span></button>
+            <button class="ingredient" data-item="pepper" data-emoji="🟢">🟢<span>피망</span></button>
+            <button class="ingredient" data-item="shrimp" data-emoji="🍤">🍤<span>새우</span></button>
+            <button class="ingredient" data-item="mushroom" data-emoji="🍄">🍄<span>버섯</span></button>
+          </div>
+
+          <div class="chef-actions">
+            <button id="chefClear" class="pixel-btn cyan">토핑 비우기</button>
+            <button id="chefBake" class="pixel-btn primary">피자 완성!</button>
+          </div>
+        </section>
+
+        <aside class="chef-progress pixel-panel">
+          <span class="panel-title">CHEF PROGRESS</span>
+          <div class="unlock-preview">🪖</div>
+          <h3>PINK SPACE HELMET</h3>
+          <p>피자 2회 완성 시 해금</p>
+          <div class="progressbar"><i id="chefProgressFill"></i></div>
+          <b><span id="chefCount">0</span>/2</b>
+          <hr>
+          <small>획득 아이템은<br>우주인 꾸미기 스테이션에서 사용 가능</small>
+        </aside>
+      </div>
+    </section>
+
+    <!-- AVATAR -->
+    <section class="screen" id="screen-avatar">
+      <div class="screen-head">
+        <button class="back-btn" data-go="world">← 월드맵</button>
+        <div>
+          <span class="pixel-kicker">AVATAR LAB</span>
+          <h2>우주인 꾸미기</h2>
+          <p>게임을 플레이할수록 나만의 우주인이 완성됩니다.</p>
+        </div>
+      </div>
+
+      <div class="avatar-grid">
+        <div class="avatar-stage pixel-panel">
+          <img src="assets/uno_guide.png" alt="UNO 우주인" id="avatarImg">
+          <div class="avatar-title">
+            <small>MY UNO CREW</small>
+            <h3 id="avatarTitle">PINK ORBIT EXPLORER</h3>
+          </div>
+        </div>
+
+        <div class="closet pixel-panel">
+          <div class="tabs">
+            <button class="tab active" data-tab="helmet">헬멧</button>
+            <button class="tab" data-tab="suit">우주복</button>
+            <button class="tab" data-tab="acc">액세서리</button>
+          </div>
+          <div class="closet-list" id="closetList"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- REWARD -->
+    <section class="screen" id="screen-rewards">
+      <div class="screen-head">
+        <button class="back-btn" data-go="world">← 월드맵</button>
+        <div>
+          <span class="pixel-kicker">REWARD BAY</span>
+          <h2>보상 스테이션</h2>
+          <p>게임 포인트를 실제 UNO 식사 혜택으로 교환하세요.</p>
+        </div>
+      </div>
+
+      <div class="reward-summary pixel-panel">
+        <div><span>보유 포인트</span><b><i id="rewardPoint">350</i>P</b></div>
+        <div><span>총 EXP</span><b id="rewardExp">0</b></div>
+        <div><span>연속 출석</span><b>3 DAYS</b></div>
+      </div>
+
+      <div class="coupon-grid">
+        <article class="coupon-card pink">
+          <span>SPACE COUPON</span>
+          <h3>10% OFF</h3>
+          <p>UNO 전 제품 10% 할인 쿠폰</p>
+          <button class="pixel-btn primary redeem" data-cost="1000" data-name="10% 할인 쿠폰">1,000P 교환</button>
+        </article>
+        <article class="coupon-card yellow">
+          <span>MEAL TICKET</span>
+          <h3>FREE UNO</h3>
+          <p>UNO 제품 1개 교환 쿠폰</p>
+          <button class="pixel-btn primary redeem" data-cost="5000" data-name="UNO 제품 쿠폰">5,000P 교환</button>
+        </article>
+      </div>
+    </section>
+
+    <!-- CAMPUS -->
+    <section class="screen" id="screen-campus">
+      <div class="screen-head">
+        <button class="back-btn" data-go="world">← 월드맵</button>
+        <div>
+          <span class="pixel-kicker">SEASON EVENT</span>
+          <h2>Campus League Planet</h2>
+          <p>내 플레이가 학교 점수로 누적되는 대학 축제 시즌 한정 행성.</p>
+        </div>
+      </div>
+
+      <div class="campus-grid">
+        <section class="campus-game pixel-panel">
+          <label>MY UNIVERSITY</label>
+          <select id="schoolSelect">
+            <option>서강대학교</option>
+            <option>연세대학교</option>
+            <option>홍익대학교</option>
+            <option>이화여자대학교</option>
+          </select>
+
+          <div class="school-card">
+            <div class="school-mark" id="schoolMark">S</div>
+            <div><small>SPECIAL UNO MISSION</small><h3 id="schoolTitle">서강대학교 ORBIT</h3></div>
+          </div>
+
+          <div class="tap-zone">
+            <button id="tapButton" disabled>🚀<span>TAP!</span></button>
+            <b id="campusTimer">READY</b>
+            <p>이번 판 <strong id="campusRound">0</strong>점</p>
+          </div>
+
+          <button id="campusStart" class="pixel-btn primary">10초 대항전 시작</button>
+        </section>
+
+        <aside class="ranking pixel-panel">
+          <span class="panel-title">LIVE RANKING</span>
+          <ol id="rankList"></ol>
+          <div class="foodtruck">🚚 <span><b>WINNER REWARD</b><small>우승 학교에 UNO 푸드트럭 출동!</small></span></div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- SHOP -->
+    <section class="screen" id="screen-shop">
+      <div class="screen-head">
+        <button class="back-btn" data-go="world">← 월드맵</button>
+        <div>
+          <span class="pixel-kicker">REAL MEAL GATE</span>
+          <h2>UNO Space Shop</h2>
+          <p>게임에서 만난 UNO를 오늘의 실제 한 끼로 연결하세요.</p>
+        </div>
+      </div>
+
+      <div class="shop-guide">
+        <img src="assets/uno_guide.png" alt="">
+        <div class="speech-bubble"><b>UNO CREW</b><p>오늘 네 궤도에 맞는 UNO는 뭐야?</p></div>
+      </div>
+
+      <div class="shop-grid">
+        <article class="product pixel-panel">
+          <img src="assets/pizza.png">
+          <span>ORBIT 01 · LATE NIGHT</span>
+          <h3>UNO 피자</h3>
+          <p>늦은 귀가 후, 간단하지만 제대로 먹고 싶은 한 끼.</p>
+          <button class="pixel-btn primary shopBtn">29CM에서 보기</button>
+        </article>
+        <article class="product pixel-panel">
+          <img src="assets/package.png">
+          <span>ORBIT 02 · BETWEEN TASKS</span>
+          <h3>UNO 핸디푸드</h3>
+          <p>수업과 업무 사이, 빠르게 채우는 한 끼.</p>
+          <button class="pixel-btn primary shopBtn">29CM에서 보기</button>
+        </article>
+        <article class="product pixel-panel">
+          <img src="assets/pasta.png">
+          <span>ORBIT 03 · MY TIME</span>
+          <h3>UNO 파스타</h3>
+          <p>혼자만의 시간을 맛있게 채우는 한 끼.</p>
+          <button class="pixel-btn primary shopBtn">29CM에서 보기</button>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <div class="modal hidden" id="resultModal">
+    <div class="modal-card pixel-panel">
+      <img src="assets/uno_guide.png" alt="">
+      <span id="modalKicker">MISSION COMPLETE</span>
+      <h3 id="modalTitle">완료!</h3>
+      <p id="modalText"></p>
+      <strong id="modalReward"></strong>
+      <div class="modal-actions">
+        <button id="modalPrimary" class="pixel-btn primary">확인</button>
+        <button id="modalWorld" class="pixel-btn cyan">월드맵</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+  <script src="script.js"></script>
+
+  <nav class="bottom-nav" aria-label="모바일 게임 메뉴">
+    <button data-go="world"><span>🪐</span><b>월드</b></button>
+    <button data-go="pang"><span>🎮</span><b>UNO팡</b></button>
+    <button data-go="chef"><span>🍕</span><b>Chef</b></button>
+    <button data-go="rewards"><span>🎁</span><b>보상</b></button>
+  </nav>
+</body>
+</html>
